@@ -1,12 +1,26 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\sjy\\.ohos\\config\\default_ImARD_rQXw2r3aZmrcVIJRTSt4Lt12wNvLnL4PFe7SCK__rTA=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B62A45CA804DA49AD12CF587290C49C5D844A748B3E5D53DC52EDF9B9501C05BC5DD1FB2C2E08C7",
+          "profile": "C:\\Users\\sjy\\.ohos\\config\\default_ImARD_rQXw2r3aZmrcVIJRTSt4Lt12wNvLnL4PFe7SCK__rTA=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\sjy\\.ohos\\config\\default_ImARD_rQXw2r3aZmrcVIJRTSt4Lt12wNvLnL4PFe7SCK__rTA=.p12",
+          "storePassword": "0000001B21257FBC0F521D9C631552F41C3B351CA790AF9787242D31B5411754E9325CE4A6AA5B10EBC35D"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
         "signingConfig": "default",
         "targetSdkVersion": "6.0.0(20)",
-        "compatibleSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersion": "5.0.5(17)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "strictMode": {
