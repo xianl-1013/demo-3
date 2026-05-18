@@ -64,7 +64,7 @@ export struct MeetingHomePage {
   }
 
   build() {
-    Stack() {
+    Stack({ alignContent: Alignment.Bottom }) {
       Column()
         .width('100%')
         .height('100%')
@@ -147,12 +147,12 @@ export struct MeetingHomePage {
           }
         }
         .width('100%')
-        .layoutWeight(1)
-
-        this.buildBottomBar()
+        .height('100%')
       }
       .width('100%')
       .height('100%')
+
+      this.buildBottomBar()
     }
     .width('100%')
     .height('100%')
@@ -162,71 +162,248 @@ export struct MeetingHomePage {
   private buildBottomBar() {
     Column() {
       Stack() {
-        if (this.showBottomLiquid) {
+        // =========================
+        // 1) 底部整体漂浮阴影 / 外光晕
+        // =========================
+        Column()
+          .width('92%')
+          .height(56)
+          .borderRadius(28)
+          .backgroundColor('#10FFFFFF')
+          .shadow({
+            radius: 34,
+            color: '#26000000',
+            offsetX: 0,
+            offsetY: 16
+          })
+          .position({ x: '4%', y: 24 })
+
+        // =========================
+        // 2) 主玻璃底座
+        // =========================
+        Stack() {
           Column()
-            .width('30%')
-            .height(46)
-            .borderRadius(23)
-            .backgroundColor('#42FFFFFF')
-            .backdropBlur(24)
+            .width('100%')
+            .height('100%')
+            .borderRadius(36)
+            .backgroundColor('#2AFFFFFF')
+            .backdropBlur(56)
+            .linearGradient({
+              direction: GradientDirection.RightBottom,
+              colors: [
+                ['#9AFFFFFF', 0.00],
+                ['#56FFFFFF', 0.18],
+                ['#22C9DFFF', 0.52],
+                ['#18FFD8E8', 0.80],
+                ['#66FFFFFF', 1.00]
+              ]
+            })
             .border({
               width: 1,
-              color: '#78FFFFFF'
+              color: '#B8FFFFFF'
             })
             .shadow({
-              radius: 16,
-              color: '#243B82FF',
+              radius: 28,
+              color: '#1E1C2C48',
               offsetX: 0,
-              offsetY: 5
+              offsetY: 10
             })
-            .position({ x: this.getBottomLiquidLeft(this.bottomLiquidTab), y: 13 })
+
+
+          // 顶部左侧大面积反光
+          Column()
+            .width(108)
+            .height(22)
+            .borderRadius(14)
+            .backgroundColor('#32FFFFFF')
+            .backdropBlur(26)
+            .position({ x: 18, y: 8 })
+
+          // 左上局部亮斑
+          Column()
+            .width(52)
+            .height(14)
+            .borderRadius(10)
+            .backgroundColor('#24FFFFFF')
+            .position({ x: 34, y: 12 })
+
+          // 右下冷色折射
+          Column()
+            .width(92)
+            .height(30)
+            .borderRadius(18)
+            .backgroundColor('#1648B9FF')
+            .backdropBlur(24)
+            .position({ x: '71%', y: 42 })
+
+          // 左下暖色折射
+          Column()
+            .width(84)
+            .height(20)
+            .borderRadius(12)
+            .backgroundColor('#14FF8AA8')
+            .backdropBlur(18)
+            .position({ x: '20%', y: 52 })
+
+          // 底部柔和内反光
+          Column()
+            .width('88%')
+            .height(12)
+            .borderRadius(10)
+            .backgroundColor('#18FFFFFF')
+            .position({ x: '6%', y: 58 })
+
+          // 左右边缘轻微发光
+          Column()
+            .width(14)
+            .height(46)
+            .borderRadius(10)
+            .backgroundColor('#18FFFFFF')
+            .position({ x: 6, y: 14 })
+
+          Column()
+            .width(14)
+            .height(46)
+            .borderRadius(10)
+            .backgroundColor('#14FFFFFF')
+            .position({ x: '95%', y: 14 })
+
+          // =========================
+          // 3) 选中项外层光晕
+          // =========================
+          Column()
+            .width('33.5%')
+            .height(62)
+            .borderRadius(31)
+            .backgroundColor('#10FFFFFF')
+            .shadow({
+              radius: 24,
+              color: '#30DDEBFF',
+              offsetX: 0,
+              offsetY: 2
+            })
+            .position({ x: this.getBottomLiquidGlowLeft(this.currentTab), y: 6 })
             .animation({
-              duration: 320,
+              duration: 300,
               curve: Curve.EaseInOut
             })
-        }
 
-        Row() {
-          this.buildBottomTabItem(0, '会议')
-          this.buildBottomTabItem(1, '通讯录')
-          this.buildBottomTabItem(2, '我的')
+          // =========================
+          // 4) 选中液态胶囊
+          // =========================
+          Stack() {
+            Column()
+              .width('100%')
+              .height('100%')
+              .borderRadius(31)
+              .backgroundColor('#52FFFFFF')
+              .backdropBlur(62)
+              .linearGradient({
+                direction: GradientDirection.RightBottom,
+                colors: [
+                  ['#DFFFFFFF', 0.00],
+                  ['#82FFFFFF', 0.16],
+                  ['#40D8E7FF', 0.52],
+                  ['#28FFD4E1', 0.82],
+                  ['#8EFFFFFF', 1.00]
+                ]
+              })
+              .border({
+                width: 1,
+                color: '#E4FFFFFF'
+              })
+              .shadow({
+                radius: 18,
+                color: '#223D6FA8',
+                offsetX: 0,
+                offsetY: 6
+              })
+
+
+
+            // 胶囊内部大反光
+            Column()
+              .width(72)
+              .height(16)
+              .borderRadius(10)
+              .backgroundColor('#3CFFFFFF')
+              .backdropBlur(18)
+              .position({ x: 14, y: 9 })
+
+            // 胶囊内部局部折射
+            Column()
+              .width(54)
+              .height(14)
+              .borderRadius(9)
+              .backgroundColor('#18A7D7FF')
+              .position({ x: '58%', y: 30 })
+
+            // 胶囊底部柔光
+            Column()
+              .width('70%')
+              .height(10)
+              .borderRadius(8)
+              .backgroundColor('#20FFFFFF')
+              .position({ x: '15%', y: 46 })
+          }
+          .width('31.2%')
+          .height(58)
+          .borderRadius(31)
+          .position({ x: this.getBottomLiquidLeft(this.currentTab), y: 8 })
+          .animation({
+            duration: 300,
+            curve: Curve.EaseInOut
+          })
+
+          // =========================
+          // 5) tab 内容层
+          // =========================
+          Row() {
+            this.buildBottomTabItem(0, '会议')
+            this.buildBottomTabItem(1, '通讯录')
+            this.buildBottomTabItem(2, '我的')
+          }
+          .width('100%')
+          .height('100%')
+          .justifyContent(FlexAlign.SpaceAround)
+          .zIndex(20)
         }
         .width('100%')
-        .height('100%')
-        .justifyContent(FlexAlign.SpaceAround)
+        .height(74)
+        .borderRadius(36)
       }
       .width('100%')
-      .height(72)
-      .borderRadius(30)
-      .backgroundColor('#64FFFFFF')
-      .backdropBlur(28)
-      .border({
-        width: 1,
-        color: '#8CFFFFFF'
-      })
-      .shadow({
-        radius: 22,
-        color: '#1F2F68FF',
-        offsetX: 0,
-        offsetY: 8
-      })
-      .clip(true)
+      .height(94)
     }
     .width('100%')
-    .height(84)
-    .padding({ left: 14, right: 14, top: 4, bottom: 8 })
+    .height(108)
+    .padding({ left: 16, right: 16, bottom: 10 })
+    .justifyContent(FlexAlign.End)
+    .zIndex(999)
   }
 
   private getBottomLiquidLeft(tab: number): string {
     if (tab === 0) {
-      return '2%'
+      return '1.1%'
     }
 
     if (tab === 1) {
-      return '35%'
+      return '34.45%'
     }
 
-    return '68%'
+    return '67.8%'
+  }
+
+  private getBottomLiquidGlowLeft(tab: number): string {
+    if (tab === 0) {
+      return '0.2%'
+    }
+
+    if (tab === 1) {
+      return '33.5%'
+    }
+
+    return '66.9%'
   }
 
   private handleBottomTabClick(index: number): void {
@@ -234,58 +411,11 @@ export struct MeetingHomePage {
       return
     }
 
-    this.bottomLiquidAnimationVersion++
-    const animationVersion: number = this.bottomLiquidAnimationVersion
-
-    this.bottomLiquidTab = this.currentTab
-    this.showBottomLiquid = true
     this.currentTab = index
-
-    setTimeout(() => {
-      if (this.bottomLiquidAnimationVersion === animationVersion) {
-        this.bottomLiquidTab = index
-      }
-    }, 20)
-
-    setTimeout(() => {
-      if (this.bottomLiquidAnimationVersion === animationVersion) {
-        this.showBottomLiquid = false
-      }
-    }, 390)
+    this.bottomLiquidTab = index
   }
 
-  /**
-   * 会议首页
-   */
-  @Builder
-  private buildMeetingPage() {
-    Column() {
-      this.buildMeetingHeader()
 
-      Scroll() {
-        Column() {
-          this.buildMainActionCard()
-
-          if (this.showJoinPanel) {
-            this.buildJoinPanel()
-          }
-
-          if (this.showCreatePanel) {
-            this.buildCreatePanel()
-          }
-
-          this.buildTodayMeetingCard()
-          this.buildRecentHistoryCard()
-        }
-        .width('100%')
-        .padding({ left: 18, right: 18, bottom: 24 })
-      }
-      .layoutWeight(1)
-    }
-    .width('100%')
-    .height('100%')
-
-  }
 
   @Builder
   private buildMeetingHeader() {
@@ -439,250 +569,7 @@ export struct MeetingHomePage {
     })
   }
 
-  /**
-   * 加入会议展开卡片
-   */
-  @Builder
-  private buildJoinPanel() {
-    Column() {
-      Row() {
-        Text('加入会议')
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .layoutWeight(1)
 
-        Text('收起')
-          .fontSize(13)
-          .fontColor('#8A93A3')
-          .onClick(() => {
-            this.showJoinPanel = false
-          })
-      }
-      .width('100%')
-      .margin({ bottom: 12 })
-
-      Row() {
-        TextInput({ placeholder: '请输入会议号', text: this.joinMeetingNo })
-          .layoutWeight(1)
-          .height(48)
-          .fontSize(15)
-          .fontColor('#222222')
-          .placeholderColor('#A0A7B5')
-          .backgroundColor('#F6F8FC')
-          .borderRadius(24)
-          .padding({ left: 16, right: 16 })
-          .onChange((value: string) => {
-            this.joinMeetingNo = value
-          })
-
-        Button('加入')
-          .width(88)
-          .height(48)
-          .fontSize(15)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#FFFFFF')
-          .backgroundColor('#2F68FF')
-          .borderRadius(24)
-          .margin({ left: 10 })
-          .onClick(() => {
-            this.handleJoinMeeting()
-          })
-      }
-      .width('100%')
-    }
-    .width('100%')
-    .padding(18)
-    .margin({ top: 14 })
-    .borderRadius(26)
-    .backgroundColor('#FFFFFF')
-    .shadow({
-      radius: 16,
-      color: '#10000000',
-      offsetX: 0,
-      offsetY: 8
-    })
-  }
-
-  /**
-   * 发起会议展开卡片
-   */
-  @Builder
-  private buildCreatePanel() {
-    Column() {
-      Row() {
-        Text('预约 / 发起会议')
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .layoutWeight(1)
-
-        Text('收起')
-          .fontSize(13)
-          .fontColor('#8A93A3')
-          .onClick(() => {
-            this.showCreatePanel = false
-          })
-      }
-      .width('100%')
-      .margin({ bottom: 12 })
-
-      TextInput({ placeholder: '请输入会议标题', text: this.meetingTitle })
-        .width('100%')
-        .height(48)
-        .fontSize(15)
-        .fontColor('#222222')
-        .placeholderColor('#A0A7B5')
-        .backgroundColor('#F6F8FC')
-        .borderRadius(24)
-        .padding({ left: 16, right: 16 })
-        .margin({ bottom: 12 })
-        .onChange((value: string) => {
-          this.meetingTitle = value
-        })
-
-      Button('立即发起')
-        .width('100%')
-        .height(48)
-        .fontSize(16)
-        .fontWeight(FontWeight.Bold)
-        .fontColor('#FFFFFF')
-        .backgroundColor('#2F68FF')
-        .borderRadius(24)
-        .onClick(() => {
-          this.handleCreateMeeting()
-        })
-    }
-    .width('100%')
-    .padding(18)
-    .margin({ top: 14 })
-    .borderRadius(26)
-    .backgroundColor('#FFFFFF')
-    .shadow({
-      radius: 16,
-      color: '#10000000',
-      offsetX: 0,
-      offsetY: 8
-    })
-  }
-
-  /**
-   * 今日会议状态
-   */
-  @Builder
-  private buildTodayMeetingCard() {
-    Column() {
-      Row() {
-        Column() {
-          Text('今日')
-            .fontSize(22)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#1F2937')
-
-          Text(this.getTodaySubText())
-            .fontSize(13)
-            .fontColor('#8A93A3')
-            .margin({ top: 5 })
-        }
-        .alignItems(HorizontalAlign.Start)
-        .layoutWeight(1)
-
-        Text(this.getTodayTagText())
-          .fontSize(13)
-          .fontWeight(FontWeight.Bold)
-          .fontColor(this.getTodayTagColor())
-          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
-          .backgroundColor(this.getTodayTagBgColor())
-          .borderRadius(15)
-      }
-      .width('100%')
-
-      Column() {
-        Text(this.historyRows.length === 0 ? '☕' : '📹')
-          .fontSize(42)
-
-        Text(this.historyRows.length === 0 ? '暂无会议' : '会议记录已更新')
-          .fontSize(16)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#7B8494')
-          .margin({ top: 8 })
-
-        Text(this.historyRows.length === 0 ? '创建或加入会议后会显示在这里' : '可在下方查看最近会议')
-          .fontSize(13)
-          .fontColor('#A0A7B5')
-          .margin({ top: 5 })
-      }
-      .width('100%')
-      .height(132)
-      .justifyContent(FlexAlign.Center)
-      .alignItems(HorizontalAlign.Center)
-    }
-    .width('100%')
-    .padding(18)
-    .margin({ top: 14 })
-    .borderRadius(28)
-    .backgroundColor('#FFFFFF')
-    .shadow({
-      radius: 18,
-      color: '#10000000',
-      offsetX: 0,
-      offsetY: 8
-    })
-  }
-
-  /**
-   * 最近会议，只展示两条，完整历史后续单独页面
-   */
-  @Builder
-  private buildRecentHistoryCard() {
-    Column() {
-      Row() {
-        Text('最近会议')
-          .fontSize(20)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1F2937')
-          .layoutWeight(1)
-
-        Text(this.isLoadingHistory ? '刷新中' : '全部')
-          .fontSize(13)
-          .fontColor('#2F68FF')
-          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
-          .backgroundColor('#EAF1FF')
-          .borderRadius(15)
-          .onClick(() => {
-            this.loadHistory(true)
-          })
-      }
-      .width('100%')
-      .margin({ bottom: 12 })
-
-      if (this.historyRows.length === 0) {
-        Text('暂无会议记录')
-          .fontSize(14)
-          .fontColor('#9CA3AF')
-          .width('100%')
-          .height(54)
-          .textAlign(TextAlign.Center)
-      } else {
-        ForEach(this.getHomeHistoryRows(), (item: MeetingHistoryResponse) => {
-          this.buildHomeHistoryItem(item)
-        }, (item: MeetingHistoryResponse) => {
-          return item.meetingId + '_' + item.status + '_' + String(item.online)
-        })
-      }
-    }
-    .width('100%')
-    .padding(18)
-    .margin({ top: 14 })
-    .borderRadius(28)
-    .backgroundColor('#FFFFFF')
-    .shadow({
-      radius: 18,
-      color: '#10000000',
-      offsetX: 0,
-      offsetY: 8
-    })
-  }
 
   @Builder
   private buildHomeHistoryItem(item: MeetingHistoryResponse) {
@@ -1023,24 +910,30 @@ export struct MeetingHomePage {
       }
 
       Text(title)
-        .fontSize(12)
-        .fontWeight(this.currentTab === index ? FontWeight.Bold : FontWeight.Normal)
-        .fontColor(this.currentTab === index ? '#0A6CFF' : '#8D94A3')
+        .fontSize(11)
+        .fontWeight(this.currentTab === index ? FontWeight.Bold : FontWeight.Medium)
+        .fontColor(this.currentTab === index ? '#F26C86' : '#7C838F')
         .margin({ top: 3 })
+        .opacity(this.currentTab === index ? 1 : 0.92)
     }
     .layoutWeight(1)
     .height('100%')
     .justifyContent(FlexAlign.Center)
     .alignItems(HorizontalAlign.Center)
-    .opacity(this.currentTab === index ? 1 : 0.86)
+    .opacity(this.currentTab === index ? 1 : 0.82)
+    .scale({
+      x: this.currentTab === index ? 1.03 : 1.0,
+      y: this.currentTab === index ? 1.03 : 1.0
+    })
     .animation({
-      duration: 240,
+      duration: 220,
       curve: Curve.EaseInOut
     })
     .onClick(() => {
       this.handleBottomTabClick(index)
     })
   }
+
   @Builder
   private buildMeetingTabIcon(active: boolean) {
     if (active) {
