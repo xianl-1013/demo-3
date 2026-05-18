@@ -1,0 +1,71 @@
+# =========================
+# HarmonyOS / ArkTS frontend
+# =========================
+node_modules/
+oh_modules/
+build/
+.hvigor/
+.cxx/
+.idea/
+.vscode/
+*.iml
+
+
+# =========================
+# Spring Boot backend
+# =========================
+backend/target/
+backend/build/
+backend/logs/
+backend/**/*.log
+*.log
+
+# IDE
+backend/.idea/
+backend/.vscode/
+backend/*.iml
+
+# STS / Eclipse
+backend/.apt_generated/
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings/
+backend/.springBeans
+backend/.sts4-cache
+
+# NetBeans
+backend/nbproject/private/
+backend/nbbuild/
+backend/dist/
+backend/nbdist/
+backend/.nb-gradle/
+
+
+# =========================
+# Local config / secrets
+# =========================
+.env
+*.env
+backend/.env
+backend/*.env
+backend/src/main/resources/application-local.yml
+backend/src/main/resources/application-local.yaml
+backend/src/main/resources/application-prod.yml
+backend/src/main/resources/application-prod.yaml
+
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+
+
+# =========================
+# Keep source nested build/target if any
+# =========================
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
