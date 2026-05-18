@@ -17,32 +17,44 @@ export struct MeetingTabPage {
   onOpenMine: () => void = () => {}
 
   build() {
-    Column() {
-      this.buildMeetingHeader()
-
-      Scroll() {
-        Column() {
-          this.buildMainActionCard()
-
-          if (this.showJoinPanel) {
-            this.buildJoinPanel()
-          }
-
-          if (this.showCreatePanel) {
-            this.buildCreatePanel()
-          }
-
-          this.buildTodayMeetingCard()
-          this.buildRecentHistoryCard()
-        }
+    Stack() {
+      Image($r('app.media.glass_bg_meeting'))
         .width('100%')
-        .padding({ left: 18, right: 18, bottom: 24 })
+        .height('100%')
+        .objectFit(ImageFit.Cover)
+
+      Column()
+        .width('100%')
+        .height('100%')
+        .backgroundColor('#16FFFFFF')
+        .backdropBlur(14)
+
+      Column() {
+        this.buildMeetingHeader()
+
+        Scroll() {
+          Column() {
+            this.buildMainActionCard()
+
+            if (this.showJoinPanel) {
+              this.buildJoinPanel()
+            }
+
+            if (this.showCreatePanel) {
+              this.buildCreatePanel()
+            }
+
+            this.buildTodayMeetingCard()
+            this.buildRecentHistoryCard()
+          }
+          .width('100%')
+          .padding({ left: 18, right: 18, bottom: 24 })
+        }
+        .layoutWeight(1)
       }
-      .layoutWeight(1)
+      .width('100%')
+      .height('100%')
     }
-    .width('100%')
-    .height('100%')
-    .padding({ bottom: 74 })
   }
 
   @Builder
@@ -57,15 +69,24 @@ export struct MeetingTabPage {
         }
         .width(50)
         .height(50)
-        .borderRadius(18)
-        .backgroundColor('#2F68FF')
+        .borderRadius(25)
+        .backgroundColor('#38FFFFFF')
+        .backdropBlur(24)
+        .linearGradient({
+          direction: GradientDirection.RightBottom,
+          colors: [['#68FFFFFF', 0.0], ['#3422C8FF', 0.48], ['#38FF75B8', 1.0]]
+        })
+        .border({
+          width: 1,
+          color: '#90FFFFFF'
+        })
         .justifyContent(FlexAlign.Center)
         .alignItems(HorizontalAlign.Center)
         .shadow({
-          radius: 14,
-          color: '#302F68FF',
+          radius: 20,
+          color: '#383B82FF',
           offsetX: 0,
-          offsetY: 7
+          offsetY: 9
         })
         .onClick(() => {
           this.onOpenMine()
@@ -88,10 +109,26 @@ export struct MeetingTabPage {
 
         Text('刷新')
           .fontSize(13)
-          .fontColor('#2F68FF')
-          .padding({ left: 14, right: 14, top: 8, bottom: 8 })
-          .backgroundColor('#EAF1FF')
-          .borderRadius(18)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#FFFFFF')
+          .padding({ left: 16, right: 16, top: 9, bottom: 9 })
+          .backgroundColor('#30FFFFFF')
+          .backdropBlur(22)
+          .linearGradient({
+            direction: GradientDirection.RightBottom,
+            colors: [['#66FFFFFF', 0.0], ['#3022C8FF', 0.55], ['#32FF75B8', 1.0]]
+          })
+          .border({
+            width: 1,
+            color: '#88FFFFFF'
+          })
+          .borderRadius(20)
+          .shadow({
+            radius: 16,
+            color: '#263B82FF',
+            offsetX: 0,
+            offsetY: 7
+          })
           .onClick(() => {
             this.onLoadHistory()
           })
@@ -136,13 +173,22 @@ export struct MeetingTabPage {
     }
     .width('100%')
     .padding({ left: 14, right: 14, top: 18, bottom: 18 })
-    .borderRadius(28)
-    .backgroundColor('#FFFFFF')
+    .borderRadius(34)
+    .backgroundColor('#28FFFFFF')
+    .backdropBlur(30)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#60FFFFFF', 0.0], ['#24A7E8FF', 0.48], ['#30FF7EBC', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#80FFFFFF'
+    })
     .shadow({
-      radius: 18,
-      color: '#12000000',
+      radius: 26,
+      color: '#263B82FF',
       offsetX: 0,
-      offsetY: 8
+      offsetY: 12
     })
   }
 
@@ -157,15 +203,24 @@ export struct MeetingTabPage {
       }
       .width(56)
       .height(56)
-      .borderRadius(20)
-      .backgroundColor('#2F68FF')
+      .borderRadius(28)
+      .backgroundColor('#34FFFFFF')
+      .backdropBlur(24)
+      .linearGradient({
+        direction: GradientDirection.RightBottom,
+        colors: [['#64FFFFFF', 0.0], ['#3922C8FF', 0.52], ['#3AFF78B8', 1.0]]
+      })
+      .border({
+        width: 1,
+        color: '#8CFFFFFF'
+      })
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Center)
       .shadow({
-        radius: 12,
-        color: '#262F68FF',
+        radius: 18,
+        color: '#383B82FF',
         offsetX: 0,
-        offsetY: 6
+        offsetY: 8
       })
 
       Text(title)
@@ -182,6 +237,18 @@ export struct MeetingTabPage {
         .maxLines(1)
     }
     .width('24%')
+    .padding({ top: 8, bottom: 8 })
+    .borderRadius(26)
+    .backgroundColor('#18FFFFFF')
+    .backdropBlur(18)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#36FFFFFF', 0.0], ['#14B3E8FF', 0.5], ['#1CFF8FBD', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#36FFFFFF'
+    })
     .alignItems(HorizontalAlign.Center)
     .onClick(() => {
       action()
@@ -200,7 +267,22 @@ export struct MeetingTabPage {
 
         Text('收起')
           .fontSize(13)
-          .fontColor('#8A93A3')
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#FFFFFF')
+          .padding({ left: 14, right: 14, top: 7, bottom: 7 })
+          .backgroundColor('#28FFFFFF')
+          .backdropBlur(18)
+          .borderRadius(18)
+          .border({
+            width: 1,
+            color: '#70FFFFFF'
+          })
+          .shadow({
+            radius: 12,
+            color: '#243B82FF',
+            offsetX: 0,
+            offsetY: 5
+          })
           .onClick(() => {
             this.showJoinPanel = false
           })
@@ -215,7 +297,12 @@ export struct MeetingTabPage {
           .fontSize(15)
           .fontColor('#222222')
           .placeholderColor('#A0A7B5')
-          .backgroundColor('#F6F8FC')
+          .backgroundColor('#26FFFFFF')
+          .backdropBlur(18)
+          .border({
+            width: 1,
+            color: '#68FFFFFF'
+          })
           .borderRadius(24)
           .padding({ left: 16, right: 16 })
           .onChange((value: string) => {
@@ -228,9 +315,24 @@ export struct MeetingTabPage {
           .fontSize(15)
           .fontWeight(FontWeight.Bold)
           .fontColor('#FFFFFF')
-          .backgroundColor('#2F68FF')
+          .backgroundColor('#30FFFFFF')
+          .backdropBlur(22)
+          .linearGradient({
+            direction: GradientDirection.RightBottom,
+            colors: [['#62FFFFFF', 0.0], ['#3622C8FF', 0.48], ['#34FF77B8', 1.0]]
+          })
+          .border({
+            width: 1,
+            color: '#88FFFFFF'
+          })
           .borderRadius(24)
           .margin({ left: 10 })
+          .shadow({
+            radius: 16,
+            color: '#303B82FF',
+            offsetX: 0,
+            offsetY: 7
+          })
           .onClick(() => {
             this.onJoinMeeting()
           })
@@ -240,13 +342,22 @@ export struct MeetingTabPage {
     .width('100%')
     .padding(18)
     .margin({ top: 14 })
-    .borderRadius(26)
-    .backgroundColor('#FFFFFF')
+    .borderRadius(32)
+    .backgroundColor('#2AFFFFFF')
+    .backdropBlur(30)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#66FFFFFF', 0.0], ['#24B3E8FF', 0.5], ['#2EFF8FBD', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#82FFFFFF'
+    })
     .shadow({
-      radius: 16,
-      color: '#10000000',
+      radius: 24,
+      color: '#243B82FF',
       offsetX: 0,
-      offsetY: 8
+      offsetY: 12
     })
   }
 
@@ -262,7 +373,22 @@ export struct MeetingTabPage {
 
         Text('收起')
           .fontSize(13)
-          .fontColor('#8A93A3')
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#FFFFFF')
+          .padding({ left: 14, right: 14, top: 7, bottom: 7 })
+          .backgroundColor('#28FFFFFF')
+          .backdropBlur(18)
+          .borderRadius(18)
+          .border({
+            width: 1,
+            color: '#70FFFFFF'
+          })
+          .shadow({
+            radius: 12,
+            color: '#243B82FF',
+            offsetX: 0,
+            offsetY: 5
+          })
           .onClick(() => {
             this.showCreatePanel = false
           })
@@ -276,7 +402,12 @@ export struct MeetingTabPage {
         .fontSize(15)
         .fontColor('#222222')
         .placeholderColor('#A0A7B5')
-        .backgroundColor('#F6F8FC')
+        .backgroundColor('#26FFFFFF')
+        .backdropBlur(18)
+        .border({
+          width: 1,
+          color: '#68FFFFFF'
+        })
         .borderRadius(24)
         .padding({ left: 16, right: 16 })
         .margin({ bottom: 12 })
@@ -290,8 +421,23 @@ export struct MeetingTabPage {
         .fontSize(16)
         .fontWeight(FontWeight.Bold)
         .fontColor('#FFFFFF')
-        .backgroundColor('#2F68FF')
+        .backgroundColor('#30FFFFFF')
+        .backdropBlur(22)
+        .linearGradient({
+          direction: GradientDirection.RightBottom,
+          colors: [['#62FFFFFF', 0.0], ['#3622C8FF', 0.48], ['#34FF77B8', 1.0]]
+        })
+        .border({
+          width: 1,
+          color: '#88FFFFFF'
+        })
         .borderRadius(24)
+        .shadow({
+          radius: 16,
+          color: '#303B82FF',
+          offsetX: 0,
+          offsetY: 7
+        })
         .onClick(() => {
           this.onCreateMeeting()
         })
@@ -299,13 +445,22 @@ export struct MeetingTabPage {
     .width('100%')
     .padding(18)
     .margin({ top: 14 })
-    .borderRadius(26)
-    .backgroundColor('#FFFFFF')
+    .borderRadius(32)
+    .backgroundColor('#2AFFFFFF')
+    .backdropBlur(30)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#66FFFFFF', 0.0], ['#24B3E8FF', 0.5], ['#2EFF8FBD', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#82FFFFFF'
+    })
     .shadow({
-      radius: 16,
-      color: '#10000000',
+      radius: 24,
+      color: '#243B82FF',
       offsetX: 0,
-      offsetY: 8
+      offsetY: 12
     })
   }
 
@@ -330,10 +485,24 @@ export struct MeetingTabPage {
         Text(this.getTodayTagText())
           .fontSize(13)
           .fontWeight(FontWeight.Bold)
-          .fontColor(this.getTodayTagColor())
-          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+          .fontColor('#FFFFFF')
+          .padding({ left: 14, right: 14, top: 7, bottom: 7 })
           .backgroundColor(this.getTodayTagBgColor())
-          .borderRadius(15)
+          .backdropBlur(18)
+          .border({
+            width: 1,
+            color: '#74FFFFFF'
+          })
+          .borderRadius(18)
+          .shadow({
+            radius: 14,
+            color: '#243B82FF',
+            offsetX: 0,
+            offsetY: 6
+          })
+          .onClick(() => {
+            this.onLoadHistory()
+          })
       }
       .width('100%')
 
@@ -360,13 +529,22 @@ export struct MeetingTabPage {
     .width('100%')
     .padding(18)
     .margin({ top: 14 })
-    .borderRadius(28)
-    .backgroundColor('#FFFFFF')
+    .borderRadius(34)
+    .backgroundColor('#2AFFFFFF')
+    .backdropBlur(30)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#64FFFFFF', 0.0], ['#20A7E8FF', 0.48], ['#2CFF7EBC', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#80FFFFFF'
+    })
     .shadow({
-      radius: 18,
-      color: '#10000000',
+      radius: 26,
+      color: '#263B82FF',
       offsetX: 0,
-      offsetY: 8
+      offsetY: 12
     })
   }
 
@@ -382,10 +560,26 @@ export struct MeetingTabPage {
 
         Text(this.isLoadingHistory ? '刷新中' : '全部')
           .fontSize(13)
-          .fontColor('#2F68FF')
-          .padding({ left: 12, right: 12, top: 6, bottom: 6 })
-          .backgroundColor('#EAF1FF')
-          .borderRadius(15)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#FFFFFF')
+          .padding({ left: 14, right: 14, top: 7, bottom: 7 })
+          .backgroundColor('#30FFFFFF')
+          .backdropBlur(18)
+          .linearGradient({
+            direction: GradientDirection.RightBottom,
+            colors: [['#60FFFFFF', 0.0], ['#3022C8FF', 0.52], ['#32FF75B8', 1.0]]
+          })
+          .border({
+            width: 1,
+            color: '#80FFFFFF'
+          })
+          .borderRadius(18)
+          .shadow({
+            radius: 14,
+            color: '#243B82FF',
+            offsetX: 0,
+            offsetY: 6
+          })
           .onClick(() => {
             this.onLoadHistory()
           })
@@ -411,13 +605,22 @@ export struct MeetingTabPage {
     .width('100%')
     .padding(18)
     .margin({ top: 14 })
-    .borderRadius(28)
-    .backgroundColor('#FFFFFF')
+    .borderRadius(34)
+    .backgroundColor('#2AFFFFFF')
+    .backdropBlur(30)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#64FFFFFF', 0.0], ['#20A7E8FF', 0.48], ['#2CFF7EBC', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#80FFFFFF'
+    })
     .shadow({
-      radius: 18,
-      color: '#10000000',
+      radius: 26,
+      color: '#263B82FF',
       offsetX: 0,
-      offsetY: 8
+      offsetY: 12
     })
   }
 
@@ -454,6 +657,11 @@ export struct MeetingTabPage {
           .fontColor(this.getHistoryStatusColor(item))
           .padding({ left: 10, right: 10, top: 5, bottom: 5 })
           .backgroundColor(this.getHistoryStatusBgColor(item))
+          .backdropBlur(12)
+          .border({
+            width: 1,
+            color: '#58FFFFFF'
+          })
           .borderRadius(12)
 
         Text(item.host ? '主持人' : '参会人')
@@ -466,8 +674,23 @@ export struct MeetingTabPage {
     .width('100%')
     .padding(14)
     .margin({ bottom: 10 })
-    .borderRadius(18)
-    .backgroundColor('#F6F8FC')
+    .borderRadius(24)
+    .backgroundColor('#22FFFFFF')
+    .backdropBlur(20)
+    .linearGradient({
+      direction: GradientDirection.RightBottom,
+      colors: [['#58FFFFFF', 0.0], ['#18A7E8FF', 0.5], ['#24FF7EBC', 1.0]]
+    })
+    .border({
+      width: 1,
+      color: '#60FFFFFF'
+    })
+    .shadow({
+      radius: 14,
+      color: '#183B82FF',
+      offsetX: 0,
+      offsetY: 6
+    })
     .onClick(() => {
       this.onClickHistoryMeeting(item)
     })
@@ -517,10 +740,10 @@ export struct MeetingTabPage {
 
   private getTodayTagBgColor(): string {
     if (this.historyRows.length === 0) {
-      return '#EEF1F6'
+      return '#2CFFFFFF'
     }
 
-    return '#EAF1FF'
+    return '#34FFFFFF'
   }
 
   private getHomeHistoryRows(): MeetingHistoryResponse[] {
@@ -560,13 +783,13 @@ export struct MeetingTabPage {
 
   private getHistoryStatusBgColor(item: MeetingHistoryResponse): string {
     if (item.status === 'running' && item.online) {
-      return '#E8F8F0'
+      return '#2AFFFFFF'
     }
 
     if (item.status === 'running' && !item.online) {
-      return '#FFF4DE'
+      return '#2EFFFFFF'
     }
 
-    return '#EEF1F6'
+    return '#24FFFFFF'
   }
 }

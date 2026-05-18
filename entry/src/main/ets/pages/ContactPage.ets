@@ -33,23 +33,30 @@ export struct ContactPage {
   ]
 
   build() {
-    Column() {
-      this.buildHeader()
-
-      Scroll() {
-        Column() {
-          this.buildSearchBox()
-          this.buildActionCard()
-          this.buildCommonContactCard()
-          this.buildOrganizationCard()
-        }
+    Stack() {
+      Image($r('app.media.glass_bg_contact'))
         .width('100%')
-        .padding({ left: 18, right: 18, bottom: 24 })
+        .height('100%')
+        .objectFit(ImageFit.Cover)
+
+      Column() {
+        this.buildHeader()
+
+        Scroll() {
+          Column() {
+            this.buildSearchBox()
+            this.buildActionCard()
+            this.buildCommonContactCard()
+            this.buildOrganizationCard()
+          }
+          .width('100%')
+          .padding({ left: 18, right: 18, bottom: 24 })
+        }
+        .layoutWeight(1)
       }
-      .layoutWeight(1)
+      .width('100%')
+      .height('100%')
     }
-    .width('100%')
-    .height('100%')
   }
 
   @Builder
@@ -110,7 +117,7 @@ export struct ContactPage {
     .height(52)
     .padding({ left: 16, right: 16 })
     .borderRadius(26)
-    .backgroundColor('#FFFFFF')
+    .backgroundColor('#E6FFFFFF')
     .shadow({
       radius: 16,
       color: '#10000000',
@@ -138,10 +145,10 @@ export struct ContactPage {
     .padding({ top: 18, bottom: 18 })
     .margin({ top: 14 })
     .borderRadius(28)
-    .backgroundColor('#FFFFFF')
+    .backgroundColor('#E6FFFFFF')
     .shadow({
-      radius: 18,
-      color: '#10000000',
+      radius: 22,
+      color: '#22000000',
       offsetX: 0,
       offsetY: 8
     })
@@ -208,10 +215,10 @@ export struct ContactPage {
     .padding(18)
     .margin({ top: 14 })
     .borderRadius(28)
-    .backgroundColor('#FFFFFF')
+    .backgroundColor('#E6FFFFFF')
     .shadow({
-      radius: 18,
-      color: '#10000000',
+      radius: 22,
+      color: '#22000000',
       offsetX: 0,
       offsetY: 8
     })
@@ -288,10 +295,10 @@ export struct ContactPage {
     .padding(18)
     .margin({ top: 14 })
     .borderRadius(28)
-    .backgroundColor('#FFFFFF')
+    .backgroundColor('#E6FFFFFF')
     .shadow({
-      radius: 18,
-      color: '#10000000',
+      radius: 22,
+      color: '#22000000',
       offsetX: 0,
       offsetY: 8
     })

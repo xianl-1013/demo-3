@@ -30,6 +30,8 @@ export struct MeetingHomePage {
 
   // 0：会议，1：通讯录，2：我的
   @State currentTab: number = 0
+  @State showBottomLiquid: boolean = false
+  @State bottomLiquidTab: number = 0
 
   // 我的页面基础信息，后面可以从 AuthApi 或用户接口中读取
   @State currentUserName: string = '管理员'
@@ -37,6 +39,7 @@ export struct MeetingHomePage {
   @State currentUserPhone: string = '13800000000'
 
   private lastResumeRefreshTime: number = 0
+  private bottomLiquidAnimationVersion: number = 0
 
   private log(tag: string, message: string): void {
     console.info('[MeetingHomePage][' + tag + '] ' + message)
@@ -158,26 +161,99 @@ export struct MeetingHomePage {
   @Builder
   private buildBottomBar() {
     Column() {
-      Divider()
-        .width('100%')
-        .height(0.5)
-        .color('#F0F1F5')
+      Stack() {
+        if (this.showBottomLiquid) {
+          Column()
+            .width('30%')
+            .height(46)
+            .borderRadius(23)
+            .backgroundColor('#42FFFFFF')
+            .backdropBlur(24)
+            .border({
+              width: 1,
+              color: '#78FFFFFF'
+            })
+            .shadow({
+              radius: 16,
+              color: '#243B82FF',
+              offsetX: 0,
+              offsetY: 5
+            })
+            .position({ x: this.getBottomLiquidLeft(this.bottomLiquidTab), y: 13 })
+            .animation({
+              duration: 320,
+              curve: Curve.EaseInOut
+            })
+        }
 
-      Row() {
-        this.buildBottomTabItem(0, '会议')
-        this.buildBottomTabItem(1, '通讯录')
-        this.buildBottomTabItem(2, '我的')
+        Row() {
+          this.buildBottomTabItem(0, '会议')
+          this.buildBottomTabItem(1, '通讯录')
+          this.buildBottomTabItem(2, '我的')
+        }
+        .width('100%')
+        .height('100%')
+        .justifyContent(FlexAlign.SpaceAround)
       }
       .width('100%')
-      .height(64)
-      .padding({ left: 24, right: 24 })
-      .justifyContent(FlexAlign.SpaceAround)
-      .backgroundColor('#FFFFFF')
+      .height(72)
+      .borderRadius(30)
+      .backgroundColor('#64FFFFFF')
+      .backdropBlur(28)
+      .border({
+        width: 1,
+        color: '#8CFFFFFF'
+      })
+      .shadow({
+        radius: 22,
+        color: '#1F2F68FF',
+        offsetX: 0,
+        offsetY: 8
+      })
+      .clip(true)
     }
     .width('100%')
-    .height(72)
-    .backgroundColor('#FFFFFF')
+    .height(84)
+    .padding({ left: 14, right: 14, top: 4, bottom: 8 })
   }
+
+  private getBottomLiquidLeft(tab: number): string {
+    if (tab === 0) {
+      return '2%'
+    }
+
+    if (tab === 1) {
+      return '35%'
+    }
+
+    return '68%'
+  }
+
+  private handleBottomTabClick(index: number): void {
+    if (this.currentTab === index) {
+      return
+    }
+
+    this.bottomLiquidAnimationVersion++
+    const animationVersion: number = this.bottomLiquidAnimationVersion
+
+    this.bottomLiquidTab = this.currentTab
+    this.showBottomLiquid = true
+    this.currentTab = index
+
+    setTimeout(() => {
+      if (this.bottomLiquidAnimationVersion === animationVersion) {
+        this.bottomLiquidTab = index
+      }
+    }, 20)
+
+    setTimeout(() => {
+      if (this.bottomLiquidAnimationVersion === animationVersion) {
+        this.showBottomLiquid = false
+      }
+    }, 390)
+  }
+
   /**
    * 会议首页
    */
@@ -949,78 +1025,65 @@ export struct MeetingHomePage {
       Text(title)
         .fontSize(12)
         .fontWeight(this.currentTab === index ? FontWeight.Bold : FontWeight.Normal)
-        .fontColor(this.currentTab === index ? '#0A6CFF' : '#2F3542')
-        .margin({ top: 4 })
+        .fontColor(this.currentTab === index ? '#0A6CFF' : '#8D94A3')
+        .margin({ top: 3 })
     }
     .layoutWeight(1)
     .height('100%')
     .justifyContent(FlexAlign.Center)
     .alignItems(HorizontalAlign.Center)
+    .opacity(this.currentTab === index ? 1 : 0.86)
+    .animation({
+      duration: 240,
+      curve: Curve.EaseInOut
+    })
     .onClick(() => {
-      this.currentTab = index
+      this.handleBottomTabClick(index)
     })
   }
   @Builder
   private buildMeetingTabIcon(active: boolean) {
-    Row() {
-      Column()
-        .width(20)
-        .height(18)
-        .borderRadius(4)
-        .backgroundColor(active ? '#0A6CFF' : '#8D94A3')
-
-      Column()
-        .width(6)
-        .height(12)
-        .borderRadius(2)
-        .backgroundColor(active ? '#0A6CFF' : '#8D94A3')
-        .margin({ left: 2 })
+    if (active) {
+      Image($r('app.media.tab_meeting_active'))
+        .width(28)
+        .height(28)
+        .objectFit(ImageFit.Contain)
+    } else {
+      Image($r('app.media.tab_meeting_inactive'))
+        .width(28)
+        .height(28)
+        .objectFit(ImageFit.Contain)
     }
-    .width(30)
-    .height(26)
-    .justifyContent(FlexAlign.Center)
-    .alignItems(VerticalAlign.Center)
   }
+
   @Builder
   private buildContactTabIcon(active: boolean) {
-    Stack() {
-      Column()
-        .width(18)
-        .height(22)
-        .borderRadius(3)
-        .backgroundColor(active ? '#0A6CFF' : '#8D94A3')
-
-      Column()
-        .width(4)
-        .height(22)
-        .borderRadius(2)
-        .backgroundColor(active ? '#0A6CFF' : '#8D94A3')
-        .position({ x: 20, y: 0 })
-        .opacity(0.8)
+    if (active) {
+      Image($r('app.media.tab_contact_active'))
+        .width(28)
+        .height(28)
+        .objectFit(ImageFit.Contain)
+    } else {
+      Image($r('app.media.tab_contact_inactive'))
+        .width(28)
+        .height(28)
+        .objectFit(ImageFit.Contain)
     }
-    .width(30)
-    .height(26)
   }
+
   @Builder
   private buildMineTabIcon(active: boolean) {
-    Column() {
-      Column()
-        .width(13)
-        .height(13)
-        .borderRadius(7)
-        .backgroundColor(active ? '#0A6CFF' : '#8D94A3')
-
-      Column()
-        .width(24)
-        .height(12)
-        .borderRadius({ topLeft: 8, topRight: 8, bottomLeft: 4, bottomRight: 4 })
-        .backgroundColor(active ? '#0A6CFF' : '#8D94A3')
-        .margin({ top: 2 })
+    if (active) {
+      Image($r('app.media.tab_mine_active'))
+        .width(28)
+        .height(28)
+        .objectFit(ImageFit.Contain)
+    } else {
+      Image($r('app.media.tab_mine_inactive'))
+        .width(28)
+        .height(28)
+        .objectFit(ImageFit.Contain)
     }
-    .width(30)
-    .height(26)
-    .alignItems(HorizontalAlign.Center)
-    .justifyContent(FlexAlign.Center)
   }
   private getHelloText(): string {
     const hour: number = new Date().getHours()
