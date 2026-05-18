@@ -37,13 +37,19 @@ export struct LoginPage {
 
       // 左上动态柔光圆
       Column() {
+        Text('\u2605')
+          .fontSize(218)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#DDE8FF')
+          .lineHeight(230)
       }
       .width(230)
       .height(230)
-      .borderRadius(120)
-      .backgroundColor('#DDE8FF')
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
       .opacity(this.circleAni ? 0.72 : 0.95)
       .position({ x: -95, y: 70 })
+      .rotate({ angle: this.circleAni ? 12 : -8 })
       .translate({
         x: this.circleAni ? 18 : 0,
         y: this.circleAni ? -22 : 0
@@ -61,13 +67,19 @@ export struct LoginPage {
 
       // 右上动态柔光圆
       Column() {
+        Text('\u2605')
+          .fontSize(138)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#D6F0FF')
+          .lineHeight(150)
       }
       .width(150)
       .height(150)
-      .borderRadius(80)
-      .backgroundColor('#D6F0FF')
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
       .opacity(this.circleAni ? 0.95 : 0.68)
       .position({ x: '72%', y: 56 })
+      .rotate({ angle: this.circleAni ? -14 : 8 })
       .translate({
         x: this.circleAni ? -20 : 0,
         y: this.circleAni ? 24 : 0
@@ -85,13 +97,19 @@ export struct LoginPage {
 
       // 底部小动态圆
       Column() {
+        Text('\u2605')
+          .fontSize(84)
+          .fontWeight(FontWeight.Bold)
+          .fontColor('#EEF4FF')
+          .lineHeight(90)
       }
       .width(90)
       .height(90)
-      .borderRadius(50)
-      .backgroundColor('#EEF4FF')
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
       .opacity(this.circleAni ? 0.55 : 0.9)
       .position({ x: '6%', y: '76%' })
+      .rotate({ angle: this.circleAni ? 18 : -10 })
       .translate({
         x: this.circleAni ? 28 : 0,
         y: this.circleAni ? 16 : 0
